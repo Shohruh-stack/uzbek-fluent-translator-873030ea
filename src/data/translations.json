@@ -1,0 +1,142 @@
+{
+  "hello": {
+    "word": "hello",
+    "pronunciation": "/həˈloʊ/",
+    "translation": "salom, assalomu alaykum",
+    "partOfSpeech": "ot",
+    "examples": ["Hello, how are you?", "Say hello to your family"]
+  },
+  "world": {
+    "word": "world",
+    "pronunciation": "/wɜːrld/",
+    "translation": "dunyo, olam",
+    "partOfSpeech": "ot",
+    "examples": ["The world is beautiful", "Travel around the world"]
+  },
+  "book": {
+    "word": "book",
+    "pronunciation": "/bʊk/",
+    "translation": "kitob",
+    "partOfSpeech": "ot",
+    "examples": ["I love reading books", "This book is interesting"]
+  },
+  "computer": {
+    "word": "computer",
+    "pronunciation": "/kəmˈpjuːtər/",
+    "translation": "kompyuter",
+    "partOfSpeech": "ot",
+    "examples": ["My computer is fast", "Use the computer for work"]
+  },
+  "school": {
+    "word": "school",
+    "pronunciation": "/skuːl/",
+    "translation": "maktab",
+    "partOfSpeech": "ot",
+    "examples": ["Go to school", "I study at school"]
+  },
+  "teacher": {
+    "word": "teacher",
+    "pronunciation": "/ˈtiːtʃər/",
+    "translation": "o'qituvchi",
+    "partOfSpeech": "ot",
+    "examples": ["My teacher is kind", "The teacher explains well"]
+  },
+  "student": {
+    "word": "student",
+    "pronunciation": "/ˈstuːdənt/",
+    "translation": "talaba, o'quvchi",
+    "partOfSpeech": "ot",
+    "examples": ["She is a good student", "Students learn every day"]
+  },
+  "house": {
+    "word": "house",
+    "pronunciation": "/haʊs/",
+    "translation": "uy",
+    "partOfSpeech": "ot",
+    "examples": ["I live in a house", "This house is big"]
+  },
+  "family": {
+    "word": "family",
+    "pronunciation": "/ˈfæməli/",
+    "translation": "oila",
+    "partOfSpeech": "ot",
+    "examples": ["I love my family", "Family is important"]
+  },
+  "friend": {
+    "word": "friend",
+    "pronunciation": "/frend/",
+    "translation": "do'st",
+    "partOfSpeech": "ot",
+    "examples": ["He is my best friend", "Friends help each other"]
+  },
+  "water": {
+    "word": "water",
+    "pronunciation": "/ˈwɔːtər/",
+    "translation": "suv",
+    "partOfSpeech": "ot",
+    "examples": ["Drink water every day", "Water is essential for life"]
+  },
+  "food": {
+    "word": "food",
+    "pronunciation": "/fuːd/",
+    "translation": "oziq-ovqat, ovqat",
+    "partOfSpeech": "ot",
+    "examples": ["I like healthy food", "Food gives us energy"]
+  },
+  "time": {
+    "word": "time",
+    "pronunciation": "/taɪm/",
+    "translation": "vaqt",
+    "partOfSpeech": "ot",
+    "examples": ["What time is it?", "Time flies quickly"]
+  },
+  "love": {
+    "word": "love",
+    "pronunciation": "/lʌv/",
+    "translation": "sevgi, muhabbat",
+    "partOfSpeech": "ot",
+    "examples": ["Love is beautiful", "I love you"]
+  },
+  "good": {
+    "word": "good",
+    "pronunciation": "/ɡʊd/",
+    "translation": "yaxshi",
+    "partOfSpeech": "sifat",
+    "examples": ["This is good", "Have a good day"]
+  },
+  "bad": {
+    "word": "bad",
+    "pronunciation": "/bæd/",
+    "translation": "yomon",
+    "partOfSpeech": "sifat",
+    "examples": ["Bad weather", "That's bad news"]
+  },
+  "big": {
+    "word": "big",
+    "pronunciation": "/bɪɡ/",
+    "translation": "katta",
+    "partOfSpeech": "sifat",
+    "examples": ["A big house", "The elephant is big"]
+  },
+  "small": {
+    "word": "small",
+    "pronunciation": "/smɔːl/",
+    "translation": "kichik",
+    "partOfSpeech": "sifat",
+    "examples": ["A small car", "Small details matter"]
+  },
+  "happy": {
+    "word": "happy",
+    "pronunciation": "/ˈhæpi/",
+    "translation": "baxtli, xursand",
+    "partOfSpeech": "sifat",
+    "examples": ["I am happy", "Happy birthday!"]
+  },
+  "beautiful": {
+    "word": "beautiful",
+    "pronunciation": "/ˈbjuːtɪfl/",
+    "translation": "chiroyli, go'zal",
+    "partOfSpeech": "sifat",
+    "examples": ["A beautiful day", "She is beautiful"]
+  }
+}

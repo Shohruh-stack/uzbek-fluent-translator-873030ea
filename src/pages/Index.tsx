@@ -7,6 +7,7 @@ import { SearchInput } from "@/components/SearchInput";
 import { TranslationCard } from "@/components/TranslationCard";
 import { BottomNav } from "@/components/BottomNav";
 import { toast } from "sonner";
+import translationsData from "@/data/translations.json";
 
 interface Translation {
   word: string;
@@ -23,6 +24,7 @@ const Index = () => {
   const [activeTab, setActiveTab] = useState("search");
   const [favorites, setFavorites] = useState<Translation[]>([]);
   const [history, setHistory] = useState<Translation[]>([]);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
 
   // Load favorites and history from localStorage
   useEffect(() => {
@@ -39,31 +41,107 @@ const Index = () => {
     setCurrentTranslation(null);
   };
 
+  const searchInJSON = (word: string) => {
+    const normalizedWord = word.toLowerCase().trim();
+    const data = translationsData as Record<string, any>;
+    return data[normalizedWord] || null;
+  };
+
+  const searchWithGoogleTranslate = async (word: string): Promise<Translation | null> => {
+    try {
+      const isEnglishToUzbek = fromLang === "Inglizcha";
+      const sourceLang = isEnglishToUzbek ? 'en' : 'uz';
+      const targetLang = isEnglishToUzbek ? 'uz' : 'en';
+      
+      const response = await fetch(
+        `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLang}&tl=${targetLang}&dt=t&q=${encodeURIComponent(word)}`
+      );
+      
+      if (!response.ok) throw new Error('Translation failed');
+      
+      const data = await response.json();
+      const translatedText = data[0][0][0];
+      
+      return {
+        word: word,
+        pronunciation: isEnglishToUzbek ? `/${word.toLowerCase()}/` : "-",
+        translation: translatedText,
+        timestamp: Date.now(),
+      };
+    } catch (error) {
+      console.error('Google Translate error:', error);
+      return null;
+    }
+  };
+
   const handleSearch = async () => {
     if (!searchText.trim()) {
       toast.error("Iltimos, so'z kiriting");
       return;
     }
 
-    // Simple mock translation for demo
-    const isEnglishToUzbek = fromLang === "Inglizcha";
-    const mockTranslation: Translation = {
-      word: searchText,
-      pronunciation: isEnglishToUzbek ? `/${searchText.toLowerCase()}/` : "-",
-      translation: isEnglishToUzbek 
-        ? searchText + "ning tarjimasi" 
-        : "translation of " + searchText,
-      timestamp: Date.now(),
-    };
-
-    setCurrentTranslation(mockTranslation);
+    setSuggestions([]);
     
-    // Add to history
-    const newHistory = [mockTranslation, ...history.filter(h => h.word !== searchText)].slice(0, 50);
+    // First, search in local JSON
+    const localResult = searchInJSON(searchText);
+    
+    if (localResult) {
+      const translation: Translation = {
+        word: localResult.word,
+        pronunciation: localResult.pronunciation,
+        translation: localResult.translation,
+        timestamp: Date.now(),
+      };
+      
+      setCurrentTranslation(translation);
+      addToHistory(translation);
+      toast.success("Tarjima topildi (offline)");
+      return;
+    }
+
+    // If not found locally, try Google Translate
+    toast.info("Lug'atda topilmadi, onlayn qidirish...");
+    const onlineResult = await searchWithGoogleTranslate(searchText);
+    
+    if (onlineResult) {
+      setCurrentTranslation(onlineResult);
+      addToHistory(onlineResult);
+      toast.success("Tarjima topildi (online)");
+    } else {
+      toast.error("Tarjima topilmadi");
+    }
+  };
+
+  const addToHistory = (translation: Translation) => {
+    const newHistory = [translation, ...history.filter(h => h.word !== translation.word)].slice(0, 50);
     setHistory(newHistory);
     localStorage.setItem("history", JSON.stringify(newHistory));
+  };
 
-    toast.success("Tarjima topildi!");
+  const handleSearchChange = (value: string) => {
+    setSearchText(value);
+    
+    if (value.length > 0) {
+      const data = translationsData as Record<string, any>;
+      const matches = Object.keys(data)
+        .filter(word => word.toLowerCase().startsWith(value.toLowerCase()))
+        .slice(0, 10);
+      setSuggestions(matches);
+    } else {
+      setSuggestions([]);
+    }
+  };
+
+  const handleSelectSuggestion = (suggestion: string) => {
+    setSearchText(suggestion);
+    setSuggestions([]);
+    setTimeout(() => handleSearch(), 100);
+  };
+
+  const handleVoiceTranscript = (transcript: string) => {
+    setSearchText(transcript);
+    setSuggestions([]);
+    setTimeout(() => handleSearch(), 100);
   };
 
   const handleToggleFavorite = () => {
@@ -144,13 +222,15 @@ const Index = () => {
     return (
       <>
         <div className="flex justify-center mb-12">
-          <VoiceButton />
+          <VoiceButton onTranscript={handleVoiceTranscript} />
         </div>
 
         <SearchInput 
           value={searchText}
-          onChange={setSearchText}
+          onChange={handleSearchChange}
           onSubmit={handleSearch}
+          suggestions={suggestions}
+          onSelectSuggestion={handleSelectSuggestion}
         />
 
         {currentTranslation && (
